@@ -13,24 +13,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Foundation
 import PackageDescription
-
-let manifestDirectoryURL = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
-let manifestPath = manifestDirectoryURL.standardizedFileURL.path
-let isDependencyCheckout = manifestPath.contains("/.build/checkouts/")
-    || manifestPath.contains("/SourcePackages/checkouts/")
-
-func localOrForkDependency(_ repository: String, localPath: String) -> Package.Dependency {
-    let resolvedLocalPath = URL(fileURLWithPath: localPath, relativeTo: manifestDirectoryURL)
-        .standardizedFileURL
-        .path
-    if !isDependencyCheckout && FileManager.default.fileExists(atPath: resolvedLocalPath) {
-        return .package(path: resolvedLocalPath)
-    }
-
-    return .package(url: "https://github.com/1amageek/\(repository).git", branch: "main")
-}
 
 let swiftAtomics: PackageDescription.Target.Dependency = .product(name: "Atomics", package: "swift-atomics")
 let swiftCollections: PackageDescription.Target.Dependency = .product(name: "DequeModule", package: "swift-collections")
@@ -650,9 +633,9 @@ let package = Package(
 )
 
 package.dependencies += [
-    localOrForkDependency("swift-atomics", localPath: "../swift-atomics"),
-    localOrForkDependency("swift-collections", localPath: "../swift-collections"),
-    localOrForkDependency("swift-system", localPath: "../swift-system"),
+    .package(url: "https://github.com/1amageek/swift-atomics.git", branch: "main"),
+    .package(url: "https://github.com/1amageek/swift-collections.git", branch: "main"),
+    .package(url: "https://github.com/1amageek/swift-system.git", branch: "main"),
 ]
 
 // ---    STANDARD CROSS-REPO SETTINGS DO NOT EDIT   --- //

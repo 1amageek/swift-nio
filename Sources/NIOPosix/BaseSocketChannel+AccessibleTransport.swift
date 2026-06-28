@@ -14,6 +14,7 @@
 
 import NIOCore
 
+#if !os(WASI)
 extension BaseSocketChannel where SocketType: BaseSocket {
     /// The underlying transport type backing this channel.
     typealias Transport = NIOBSDSocket.Handle
@@ -43,3 +44,4 @@ extension SocketChannel: NIOTransportAccessibleChannelCore {}
 extension ServerSocketChannel: NIOTransportAccessibleChannelCore {}
 extension DatagramChannel: NIOTransportAccessibleChannelCore {}
 extension PipeChannel: NIOTransportAccessibleChannelCore {}
+#endif  // !os(WASI)

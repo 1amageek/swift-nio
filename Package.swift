@@ -632,19 +632,11 @@ let package = Package(
     ]
 )
 
-if Context.environment["SWIFTCI_USE_LOCAL_DEPS"] == nil {
-    package.dependencies += [
-        .package(url: "https://github.com/apple/swift-atomics.git", from: "1.1.0"),
-        .package(url: "https://github.com/apple/swift-collections.git", from: "1.1.0"),
-        .package(url: "https://github.com/apple/swift-system.git", from: "1.4.0"),
-    ]
-} else {
-    package.dependencies += [
-        .package(path: "../swift-atomics"),
-        .package(path: "../swift-collections"),
-        .package(path: "../swift-system"),
-    ]
-}
+package.dependencies += [
+    .package(path: "../swift-atomics"),
+    .package(path: "../swift-collections"),
+    .package(path: "../swift-system"),
+]
 
 // ---    STANDARD CROSS-REPO SETTINGS DO NOT EDIT   --- //
 for target in package.targets {
